@@ -45,6 +45,8 @@ const TRANSLATIONS = {
         score: "Score",
         time: "Time",
         seconds: "seconds",
+        lesson_completed: "Lesson Completed!",
+        
         // Challenges screen
         challenges_title: "Challenges",
         challenge_start: "Start Challenge",
@@ -316,6 +318,7 @@ const TRANSLATIONS = {
         time: "Thời gian",
         seconds: "giây",
         try_again: "Thử lại",
+        lesson_completed: "Đã hoàn thành bài học!",
         
         // Notifications
         settings_saved: "Đã lưu cài đặt thành công",

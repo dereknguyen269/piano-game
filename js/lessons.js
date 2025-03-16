@@ -919,6 +919,44 @@ class LessonManager {
     }
     
     /**
+     * Mark a lesson as complete
+     * @param {string} lessonId - The ID of the lesson to mark as complete
+     */
+    markLessonComplete(lessonId) {
+        if (!lessonId || !this.currentLevel) return;
+        
+        // Update user progress
+        if (this.userProgress[this.currentLevel] && this.userProgress[this.currentLevel][lessonId]) {
+            this.userProgress[this.currentLevel][lessonId].completed = true;
+            this.userProgress[this.currentLevel][lessonId].score = 100;
+            this.saveProgress();
+            
+            // Show completion notification
+            if (window.ui && window.ui.showNotification) {
+                window.ui.showNotification(getTranslation('lesson_completed'));
+            } else {
+                // Fallback if UI module is not available
+                alert(getTranslation('lesson_completed'));
+            }
+            
+            // Close the modal
+            const modal = document.querySelector('.lesson-player-modal');
+            if (modal) {
+                modal.remove();
+            }
+            
+            // Update the lesson card to show completion
+            this.renderLessons();
+            
+            // Go back to lessons screen
+            document.querySelectorAll('.screen').forEach(screen => {
+                screen.classList.remove('active');
+            });
+            document.getElementById('lessons-screen').classList.add('active');
+        }
+    }
+    
+    /**
      * Start learning from the beginning
      */
     startLearning() {
