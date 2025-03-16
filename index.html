@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Piano Learning Game</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="app-container">
+        <div class="theme-toggle" id="theme-toggle">
+            <div class="theme-toggle-icon moon">🌙</div>
+            <div class="theme-toggle-icon sun">☀️</div>
+        </div>
+        
+        <header>
+            <h1>Piano Learning Game</h1>
+            <nav>
+                <button id="home-btn" class="nav-btn active">Home</button>
+                <button id="lessons-btn" class="nav-btn">Lessons</button>
+                <button id="practice-btn" class="nav-btn">Practice</button>
+                <button id="settings-btn" class="nav-btn">Settings</button>
+            </nav>
+        </header>
+
+        <main>
+            <!-- Home Screen -->
+            <section id="home-screen" class="screen active">
+                <div class="welcome-container">
+                    <h2>Welcome to Piano Learning Game</h2>
+                    <p>Learn to play piano at your own pace with interactive lessons and exercises.</p>
+                    <div class="progress-summary">
+                        <h3>Your Progress</h3>
+                        <div id="progress-stats">
+                            <!-- Progress stats will be inserted here -->
+                        </div>
+                    </div>
+                    <div class="action-buttons">
+                        <button id="start-learning-btn" class="primary-btn">Start Learning</button>
+                        <button id="continue-btn" class="secondary-btn">Continue Where You Left Off</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Lessons Screen -->
+            <section id="lessons-screen" class="screen">
+                <h2>Piano Lessons</h2>
+                <div class="level-selector">
+                    <button class="level-btn active" data-level="beginner">Beginner</button>
+                    <button class="level-btn" data-level="intermediate">Intermediate</button>
+                    <button class="level-btn" data-level="advanced">Advanced</button>
+                </div>
+                <div id="lessons-container">
+                    <!-- Lessons will be inserted here -->
+                </div>
+            </section>
+
+            <!-- Practice Screen -->
+            <section id="practice-screen" class="screen">
+                <h2>Practice Mode</h2>
+                <div class="practice-options">
+                    <div class="practice-option" id="free-play">
+                        <h3>Free Play</h3>
+                        <p>Play freely on the piano with visual guidance</p>
+                    </div>
+                    <div class="practice-option" id="scales-practice">
+                        <h3>Scales</h3>
+                        <p>Practice common scales and finger patterns</p>
+                    </div>
+                    <div class="practice-option" id="chord-practice">
+                        <h3>Chords</h3>
+                        <p>Learn and practice different chord types</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Settings Screen -->
+            <section id="settings-screen" class="screen">
+                <h2>Settings</h2>
+                <div class="settings-container">
+                    <div class="setting-group">
+                        <h3>Sound</h3>
+                        <div class="setting">
+                            <div class="setting-label-group">
+                                <label class="setting-label" for="volume">Volume</label>
+                                <span class="setting-description">Adjust the overall volume of the piano</span>
+                            </div>
+                            <div class="range-container">
+                                <input type="range" id="volume" min="0" max="1" step="0.1" value="0.7">
+                            </div>
+                        </div>
+                        <div class="setting">
+                            <div class="setting-label-group">
+                                <label class="setting-label" for="piano-sound-type">Piano Sound Type</label>
+                                <span class="setting-description">Choose between synthesized or sampled piano sounds</span>
+                            </div>
+                            <div class="select-container">
+                                <select id="piano-sound-type">
+                                    <option value="synthesized">Synthesized Piano</option>
+                                    <option value="sampled">Sampled Piano (Local)</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="setting synthesizer-settings">
+                            <div class="setting-label-group">
+                                <label class="setting-label" for="sound-quality">Synthesizer Quality</label>
+                                <span class="setting-description">Higher quality includes more harmonics</span>
+                            </div>
+                            <div class="select-container">
+                                <select id="sound-quality">
+                                    <option value="basic">Basic</option>
+                                    <option value="high" selected>High (with harmonics)</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="setting synthesizer-settings">
+                            <div class="setting-label-group">
+                                <label class="setting-label" for="oscillator-type">Synthesizer Tone</label>
+                                <span class="setting-description">Different waveforms produce different timbres</span>
+                            </div>
+                            <div class="select-container">
+                                <select id="oscillator-type">
+                                    <option value="sine">Soft (Sine)</option>
+                                    <option value="triangle" selected>Medium (Triangle)</option>
+                                    <option value="square">Bright (Square)</option>
+                                    <option value="sawtooth">Sharp (Sawtooth)</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="setting">
+                            <div class="setting-label-group">
+                                <label class="setting-label" for="monophonic-mode">Monophonic Mode</label>
+                                <span class="setting-description">Only one note plays at a time</span>
+                            </div>
+                            <label class="toggle-container">
+                                <input type="checkbox" id="monophonic-mode">
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+                        <div class="setting">
+                            <div class="setting-label-group">
+                                <label class="setting-label" for="note-cutoff">Note Cutoff</label>
+                                <span class="setting-description">Stops previous notes when playing sequences</span>
+                            </div>
+                            <label class="toggle-container">
+                                <input type="checkbox" id="note-cutoff" checked>
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="setting-group">
+                        <h3>Display</h3>
+                        <div class="setting">
+                            <div class="setting-label-group">
+                                <label class="setting-label" for="show-note-names">Show Note Names</label>
+                                <span class="setting-description">Display note names on piano keys</span>
+                            </div>
+                            <label class="toggle-container">
+                                <input type="checkbox" id="show-note-names" checked>
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+                        <div class="setting">
+                            <div class="setting-label-group">
+                                <label class="setting-label" for="show-finger-numbers">Show Finger Numbers</label>
+                                <span class="setting-description">Display recommended finger numbers</span>
+                            </div>
+                            <label class="toggle-container">
+                                <input type="checkbox" id="show-finger-numbers" checked>
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+                        <div class="setting">
+                            <div class="setting-label-group">
+                                <label class="setting-label" for="language-selector">Language</label>
+                                <span class="setting-description">Change the application language</span>
+                            </div>
+                            <div class="select-container">
+                                <select id="language-selector">
+                                    <option value="en">English</option>
+                                    <option value="vi">Tiếng Việt (Vietnamese)</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="setting">
+                            <div class="setting-label-group">
+                                <label class="setting-label">Theme</label>
+                                <span class="setting-description">Choose between light and dark theme</span>
+                            </div>
+                            <label class="toggle-container">
+                                <input type="checkbox" id="theme-toggle-setting">
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="setting-group">
+                        <h3>Input Method</h3>
+                        <div class="setting">
+                            <div class="setting-label-group">
+                                <label class="setting-label">Input Device</label>
+                                <span class="setting-description">Select how you want to play the piano</span>
+                            </div>
+                            <div>
+                                <label class="radio-container">
+                                    <span>Computer Keyboard</span>
+                                    <input type="radio" name="input-method" id="input-keyboard" checked>
+                                    <span class="radio-checkmark"></span>
+                                </label>
+                                <label class="radio-container">
+                                    <span>MIDI Keyboard</span>
+                                    <input type="radio" name="input-method" id="input-midi">
+                                    <span class="radio-checkmark"></span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="setting-group">
+                        <h3>Data Management</h3>
+                        <div class="setting">
+                            <div class="setting-label-group">
+                                <label class="setting-label">Reset Options</label>
+                                <span class="setting-description">Clear your progress or all settings</span>
+                            </div>
+                            <div class="setting-buttons">
+                                <button id="reset-progress-btn" class="danger-btn">Reset Progress</button>
+                                <button id="reset-all-btn" class="danger-btn">Reset All</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Lesson Player Screen -->
+            <section id="lesson-player-screen" class="screen">
+                <div class="lesson-header">
+                    <button id="back-to-lessons-btn" class="back-btn">← Back to Lessons</button>
+                    <h2 id="lesson-title">Lesson Title</h2>
+                </div>
+                <div class="lesson-content">
+                    <div id="lesson-instructions">
+                        <!-- Lesson instructions will be inserted here -->
+                    </div>
+                    <div id="sheet-music-container">
+                        <!-- Sheet music will be displayed here -->
+                    </div>
+                </div>
+                <div class="piano-container">
+                    <div id="piano-keyboard">
+                        <!-- Piano keys will be generated here -->
+                    </div>
+                </div>
+                <div class="lesson-controls">
+                    <button id="play-demo-btn" class="control-btn">Play Demo</button>
+                    <button id="restart-lesson-btn" class="control-btn">Restart</button>
+                    <button id="next-lesson-btn" class="control-btn primary-btn">Next Lesson</button>
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            <p>&copy; 2023 Piano Learning Game</p>
+        </footer>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/tone.min.js"></script>
+    <script src="js/data.js"></script>
+    <script src="js/translations.js"></script>
+    <script src="js/piano.js"></script>
+    <script src="js/pianoSamples.js"></script>
+    <script src="js/lessons.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/animations.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html> 
