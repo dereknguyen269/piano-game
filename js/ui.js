@@ -128,6 +128,11 @@ class UI {
                 this.languageSelector.value = savedLanguage;
             }
         }
+        
+        // Restart tutorial button
+        document.getElementById('restart-tutorial-btn').addEventListener('click', () => {
+            Tutorial.startTutorial();
+        });
     }
     
     /**

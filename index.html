@@ -5,28 +5,28 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     <!-- SEO Meta Tags -->
-    <title>Piano Learning Game - Learn Piano Online</title>
-    <meta name="description" content="Learn to play piano at your own pace with interactive lessons, exercises, and practice modes. Perfect for beginners and intermediate players.">
-    <meta name="keywords" content="piano learning, online piano, piano lessons, learn piano, piano game, music education, piano practice">
-    <meta name="author" content="Piano Learning Game">
+    <title>Piano Learning Game - Vui Cùng Piano</title>
+    <meta name="description" content="Learn to play piano with Vui Cùng Piano's interactive lessons, exercises, and practice modes. Perfect for beginners and intermediate players.">
+    <meta name="keywords" content="vui cung piano, piano learning, online piano, piano lessons, learn piano, piano game, music education">
+    <meta name="author" content="Vui Cùng Piano">
     
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://piano-learning-game.com/">
-    <meta property="og:title" content="Piano Learning Game - Learn Piano Online">
-    <meta property="og:description" content="Learn to play piano at your own pace with interactive lessons, exercises, and practice modes.">
-    <meta property="og:image" content="images/piano-logo.svg">
+    <meta property="og:url" content="https://vuicungpiano.com/">
+    <meta property="og:title" content="Piano Learning Game - Vui Cùng Piano">
+    <meta property="og:description" content="Learn to play piano with Vui Cùng Piano's interactive lessons and exercises.">
+    <meta property="og:image" content="images/vuicungpiano-logo.png">
     
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="https://piano-learning-game.com/">
-    <meta property="twitter:title" content="Piano Learning Game - Learn Piano Online">
-    <meta property="twitter:description" content="Learn to play piano at your own pace with interactive lessons, exercises, and practice modes.">
-    <meta property="twitter:image" content="images/piano-logo.svg">
+    <meta property="twitter:url" content="https://vuicungpiano.com/">
+    <meta property="twitter:title" content="Piano Learning Game - Vui Cùng Piano">
+    <meta property="twitter:description" content="Learn to play piano with Vui Cùng Piano's interactive lessons and exercises.">
+    <meta property="twitter:image" content="images/vuicungpiano-logo.png">
     
     <!-- Favicon -->
-    <link rel="icon" href="images/favicon.svg" type="image/svg+xml">
-    <link rel="apple-touch-icon" href="images/favicon.svg">
+    <link rel="icon" href="images/vuicungpiano-logo.png" type="image/png">
+    <link rel="apple-touch-icon" href="images/vuicungpiano-logo.png">
     
     <!-- Stylesheets -->
     <link rel="stylesheet" href="css/style.css">
@@ -37,8 +37,8 @@
     {
       "@context": "https://schema.org",
       "@type": "WebApplication",
-      "name": "Piano Learning Game",
-      "description": "Learn to play piano at your own pace with interactive lessons, exercises, and practice modes.",
+      "name": "Vui Cùng Piano - Learn Piano Online",
+      "description": "Learn to play piano with Vui Cùng Piano's interactive lessons, exercises, and practice modes.",
       "applicationCategory": "EducationalApplication",
       "operatingSystem": "Any",
       "offers": {
@@ -48,7 +48,9 @@
       },
       "author": {
         "@type": "Organization",
-        "name": "Piano Learning Game"
+        "name": "Vui Cùng Piano",
+        "url": "https://vuicungpiano.com",
+        "logo": "https://vuicungpiano.com/images/vuicungpiano-logo.png"
       }
     }
     </script>
@@ -62,8 +64,13 @@
         
         <header>
             <div class="logo-container">
-                <img src="images/piano-logo.svg" alt="Piano Learning Game Logo" class="logo">
-                <h1>Piano Learning Game</h1>
+                <a href="https://vuicungpiano.com" target="_blank" class="logo-link">
+                    <img src="images/vuicungpiano-logo.png" alt="Vui Cùng Piano Logo" class="logo">
+                </a>
+                <div class="header-text">
+                    <h1>Vui Cùng Piano</h1>
+                    <p class="header-subtitle">Learn Piano Online</p>
+                </div>
             </div>
             <nav>
                 <button id="home-btn" class="nav-btn active">Home</button>
@@ -276,6 +283,15 @@
                                 <button id="reset-all-btn" class="danger-btn">Reset All</button>
                             </div>
                         </div>
+                        <div class="setting">
+                            <div class="setting-label-group">
+                                <label class="setting-label">Tutorial</label>
+                                <span class="setting-description">Restart the application tutorial</span>
+                            </div>
+                            <div class="setting-buttons">
+                                <button id="restart-tutorial-btn" class="primary-btn">Restart Tutorial</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </section>
@@ -321,6 +337,25 @@
     <script src="js/lessons.js"></script>
     <script src="js/ui.js"></script>
     <script src="js/animations.js"></script>
+    <script src="js/tutorial.js"></script>
     <script src="js/app.js"></script>
+    
+    <!-- Tutorial Overlay -->
+    <div class="tutorial-overlay">
+        <div class="tutorial-highlight"></div>
+        <div class="tutorial-tooltip">
+            <h3>Welcome to Piano Learning!</h3>
+            <p>Let's take a quick tour of the application.</p>
+            <div class="tutorial-controls">
+                <div class="tutorial-progress">
+                    <!-- Tutorial progress dots will be added dynamically -->
+                </div>
+                <div class="tutorial-buttons">
+                    <button class="tutorial-btn skip">Skip Tutorial</button>
+                    <button class="tutorial-btn next">Next</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 </html> 
