@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="200" height="200" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+  <!-- Piano body -->
+  <rect x="20" y="40" width="160" height="120" rx="5" ry="5" fill="#333" />
+  
+  <!-- White keys -->
+  <rect x="25" y="40" width="20" height="90" fill="white" />
+  <rect x="50" y="40" width="20" height="90" fill="white" />
+  <rect x="75" y="40" width="20" height="90" fill="white" />
+  <rect x="100" y="40" width="20" height="90" fill="white" />
+  <rect x="125" y="40" width="20" height="90" fill="white" />
+  <rect x="150" y="40" width="20" height="90" fill="white" />
+  
+  <!-- Black keys -->
+  <rect x="40" y="40" width="15" height="60" fill="#111" />
+  <rect x="65" y="40" width="15" height="60" fill="#111" />
+  <rect x="115" y="40" width="15" height="60" fill="#111" />
+  <rect x="140" y="40" width="15" height="60" fill="#111" />
+  
+  <!-- Text -->
+  <text x="100" y="150" font-family="Arial, sans-serif" font-size="16" font-weight="bold" text-anchor="middle" fill="white">Piano Learning</text>
+</svg> 

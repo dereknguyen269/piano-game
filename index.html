@@ -3,9 +3,55 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Piano Learning Game</title>
+    
+    <!-- SEO Meta Tags -->
+    <title>Piano Learning Game - Learn Piano Online</title>
+    <meta name="description" content="Learn to play piano at your own pace with interactive lessons, exercises, and practice modes. Perfect for beginners and intermediate players.">
+    <meta name="keywords" content="piano learning, online piano, piano lessons, learn piano, piano game, music education, piano practice">
+    <meta name="author" content="Piano Learning Game">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://piano-learning-game.com/">
+    <meta property="og:title" content="Piano Learning Game - Learn Piano Online">
+    <meta property="og:description" content="Learn to play piano at your own pace with interactive lessons, exercises, and practice modes.">
+    <meta property="og:image" content="images/piano-logo.svg">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://piano-learning-game.com/">
+    <meta property="twitter:title" content="Piano Learning Game - Learn Piano Online">
+    <meta property="twitter:description" content="Learn to play piano at your own pace with interactive lessons, exercises, and practice modes.">
+    <meta property="twitter:image" content="images/piano-logo.svg">
+    
+    <!-- Favicon -->
+    <link rel="icon" href="images/favicon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="images/favicon.svg">
+    
+    <!-- Stylesheets -->
     <link rel="stylesheet" href="css/style.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    
+    <!-- Structured Data for SEO -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Piano Learning Game",
+      "description": "Learn to play piano at your own pace with interactive lessons, exercises, and practice modes.",
+      "applicationCategory": "EducationalApplication",
+      "operatingSystem": "Any",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "author": {
+        "@type": "Organization",
+        "name": "Piano Learning Game"
+      }
+    }
+    </script>
 </head>
 <body>
     <div class="app-container">
@@ -15,7 +61,10 @@
         </div>
         
         <header>
-            <h1>Piano Learning Game</h1>
+            <div class="logo-container">
+                <img src="images/piano-logo.svg" alt="Piano Learning Game Logo" class="logo">
+                <h1>Piano Learning Game</h1>
+            </div>
             <nav>
                 <button id="home-btn" class="nav-btn active">Home</button>
                 <button id="lessons-btn" class="nav-btn">Lessons</button>
