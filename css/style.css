@@ -92,6 +92,7 @@ body {
     text-decoration: none;
     display: block;
     transition: transform 0.3s ease;
+    line-height: 0;
 }
 
 .logo-link:hover {
@@ -100,8 +101,9 @@ body {
 
 .logo {
     width: 80px;
-    height: 80px;
+    height: auto;
     object-fit: contain;
+    display: block;
 }
 
 .header-text {
@@ -171,7 +173,6 @@ header::after {
 
     .logo {
         width: 60px;
-        height: 60px;
     }
 }
 
