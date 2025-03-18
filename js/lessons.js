@@ -314,6 +314,13 @@ class LessonManager {
             modal.remove();
         });
         
+        // Allow closing by clicking outside modal content
+        modal.addEventListener('click', (event) => {
+            if (event.target === modal) {
+                modal.remove();
+            }
+        });
+        
         const completeButton = modal.querySelector('#complete-lesson');
         completeButton.addEventListener('click', () => {
             this.markLessonComplete(lessonId);
@@ -999,6 +1006,13 @@ class LessonManager {
         closeButton.addEventListener('click', () => {
             modal.remove();
         });
+        
+        // Allow closing by clicking outside modal content
+        modal.addEventListener('click', (event) => {
+            if (event.target === modal) {
+                modal.remove();
+            }
+        });
 
         // Add click handlers for options
         modal.querySelectorAll('.option-card').forEach(card => {
@@ -1086,7 +1100,13 @@ class LessonManager {
         const closeButton = modal.querySelector('.close-button');
         closeButton.addEventListener('click', () => {
             modal.remove();
-            this.startBeginnerJourney();
+        });
+        
+        // Allow closing by clicking outside modal content
+        modal.addEventListener('click', (event) => {
+            if (event.target === modal) {
+                modal.remove();
+            }
         });
         
         // Add click handlers for skill level options

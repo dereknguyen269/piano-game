@@ -25,9 +25,9 @@ function handleError(message, error = null, silent = false) {
 }
 
 // Catch unhandled errors
-window.addEventListener('error', (event) => {
-    handleError(getTranslation('error_unexpected') || 'An unexpected error occurred: ' + event.message, event.error);
-});
+// window.addEventListener('error', (event) => {
+//     handleError(getTranslation('error_unexpected') || 'An unexpected error occurred: ' + event.message, event.error);
+// });
 
 // Initialize the application when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
@@ -139,6 +139,13 @@ function showCompatibilityWarning(message) {
         // Add dismiss button functionality
         document.getElementById('dismiss-warning').addEventListener('click', () => {
             warningElement.remove();
+        });
+        
+        // Allow closing by clicking outside warning content
+        warningElement.addEventListener('click', (event) => {
+            if (event.target === warningElement) {
+                warningElement.remove();
+            }
         });
     }
 }
