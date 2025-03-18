@@ -186,15 +186,15 @@ class UI {
         document.getElementById('lesson-player-screen').classList.add('active');
         
         // Update lesson title and instructions
-        document.getElementById('lesson-title').textContent = 'Free Play Mode';
+        document.getElementById('lesson-title').textContent = getTranslation('free_play_title');
         document.getElementById('lesson-instructions').innerHTML = `
-            <h3>Free Play Mode</h3>
-            <p>Play freely on the piano keyboard. Use your computer keyboard, touch the keys, or connect a MIDI keyboard.</p>
-            <p>Keyboard mapping:</p>
+            <h3>${getTranslation('free_play_title')}</h3>
+            <p>${getTranslation('free_play_instructions')}</p>
+            <p>${getTranslation('keyboard_mapping')}</p>
             <ul>
-                <li>Lower row (Z-M): C4-B4</li>
-                <li>Upper row (Q-U): C5-B5</li>
-                <li>Black keys: S, D, G, H, J (lower) and 2, 3, 5, 6, 7 (upper)</li>
+                <li>${getTranslation('keyboard_mapping_lower')}</li>
+                <li>${getTranslation('keyboard_mapping_upper')}</li>
+                <li>${getTranslation('keyboard_mapping_black')}</li>
             </ul>
         `;
         
@@ -205,7 +205,7 @@ class UI {
         document.getElementById('play-demo-btn').style.display = 'none';
         document.getElementById('restart-lesson-btn').style.display = 'none';
         document.getElementById('next-lesson-btn').style.display = 'none';
-        document.getElementById('back-to-lessons-btn').textContent = '← Back to Practice';
+        document.getElementById('back-to-lessons-btn').textContent = '← ' + getTranslation('back_to_practice');
         
         // Update back button to return to practice screen
         const backButton = document.getElementById('back-to-lessons-btn');
@@ -219,7 +219,7 @@ class UI {
             document.getElementById('practice-screen').classList.add('active');
             
             // Reset back button
-            document.getElementById('back-to-lessons-btn').textContent = '← Back to Lessons';
+            document.getElementById('back-to-lessons-btn').textContent = '← ' + getTranslation('back_to_lessons');
             backButton.onclick = originalClickHandler;
             
             // Reset lesson controls
@@ -702,104 +702,168 @@ class UI {
     /**
      * Show notification
      */
-    showNotification(message, duration = 3000) {
+    showNotification(message, duration = 3000, type = 'success') {
+        // Clear any existing notification
+        const existingNotification = document.querySelector('.notification');
+        if (existingNotification) {
+            existingNotification.remove();
+        }
+        
         // Create notification element
         const notification = document.createElement('div');
-        notification.className = 'notification';
+        notification.className = `notification ${type}`;
         notification.textContent = message;
         
         // Add to body
         document.body.appendChild(notification);
         
-        // Remove after duration
-        setTimeout(() => {
+        // Make notification dismissible with click
+        notification.addEventListener('click', () => {
             notification.style.opacity = '0';
             setTimeout(() => {
                 notification.remove();
             }, 300);
-        }, duration);
+        });
+        
+        // Remove after duration
+        if (duration > 0) {
+            setTimeout(() => {
+                notification.style.opacity = '0';
+                setTimeout(() => {
+                    notification.remove();
+                }, 300);
+            }, duration);
+        }
     }
     
+    /**
+     * Create a modal dialog
+     */
+    createModal(title, content, buttons) {
+        // Create modal element
+        const modal = document.createElement('div');
+        modal.className = 'modal';
+        
+        // Create modal content
+        const modalContent = document.createElement('div');
+        modalContent.className = 'modal-content';
+        
+        // Create modal header
+        const modalHeader = document.createElement('div');
+        modalHeader.className = 'modal-header';
+        modalHeader.innerHTML = `<h3>${title}</h3>`;
+        
+        // Create close button
+        const closeButton = document.createElement('button');
+        closeButton.className = 'close-button';
+        closeButton.innerHTML = '&times;';
+        closeButton.addEventListener('click', () => modal.remove());
+        modalHeader.appendChild(closeButton);
+        
+        // Create modal body
+        const modalBody = document.createElement('div');
+        modalBody.className = 'modal-body';
+        modalBody.innerHTML = content;
+        
+        // Create modal buttons
+        const modalButtons = document.createElement('div');
+        modalButtons.className = 'modal-buttons';
+        
+        buttons.forEach(button => {
+            const btn = document.createElement('button');
+            btn.className = button.class || 'secondary-btn';
+            btn.textContent = button.text;
+            btn.addEventListener('click', () => {
+                if (button.action) {
+                    button.action();
+                }
+                if (button.closeModal !== false) {
+                    modal.remove();
+                }
+            });
+            modalButtons.appendChild(btn);
+        });
+        
+        // Assemble modal
+        modalBody.appendChild(modalButtons);
+        modalContent.appendChild(modalHeader);
+        modalContent.appendChild(modalBody);
+        modal.appendChild(modalContent);
+        
+        // Allow closing by clicking outside modal content
+        modal.addEventListener('click', (event) => {
+            if (event.target === modal) {
+                modal.remove();
+            }
+        });
+        
+        return modal;
+    }
+
     /**
      * Handle reset progress button click
      */
     handleResetProgress() {
-        // Create a modal dialog for confirmation
-        const modal = document.createElement('div');
-        modal.className = 'modal';
-        modal.innerHTML = `
-            <div class="modal-content">
-                <h3>Reset Progress</h3>
-                <p>Are you sure you want to reset all your lesson progress? This cannot be undone.</p>
-                <div class="modal-buttons">
-                    <button id="cancel-reset" class="secondary-btn">Cancel</button>
-                    <button id="confirm-reset" class="danger-btn">Reset Progress</button>
-                </div>
-            </div>
-        `;
+        const modal = this.createModal(
+            getTranslation('modal_reset_progress_title'),
+            `<p>${getTranslation('modal_reset_progress_message')}</p>`,
+            [
+                {
+                    text: getTranslation('modal_cancel'),
+                    class: 'secondary-btn'
+                },
+                {
+                    text: getTranslation('modal_reset_progress_confirm'),
+                    class: 'danger-btn',
+                    action: () => {
+                        // Clear progress data from localStorage
+                        localStorage.removeItem('userProgress');
+                        
+                        // Show notification
+                        this.showNotification(getTranslation('progress_reset_success'), 3000, 'success');
+                        
+                        // Reload the page
+                        window.location.reload();
+                    }
+                }
+            ]
+        );
         
         // Add to body
         document.body.appendChild(modal);
-        
-        // Add event listeners
-        document.getElementById('cancel-reset').addEventListener('click', () => {
-            modal.remove();
-        });
-        
-        document.getElementById('confirm-reset').addEventListener('click', () => {
-            // Clear progress data from localStorage
-            localStorage.removeItem('userProgress');
-            
-            // Show notification
-            this.showNotification('Progress has been reset');
-            
-            // Remove modal
-            modal.remove();
-            
-            // Reload the page
-            window.location.reload();
-        });
     }
     
     /**
      * Handle reset all settings button click
      */
     handleResetAll() {
-        // Create a modal dialog for confirmation
-        const modal = document.createElement('div');
-        modal.className = 'modal';
-        modal.innerHTML = `
-            <div class="modal-content">
-                <h3>Reset All Settings</h3>
-                <p>Are you sure you want to reset all settings and progress? This cannot be undone.</p>
-                <div class="modal-buttons">
-                    <button id="cancel-reset-all" class="secondary-btn">Cancel</button>
-                    <button id="confirm-reset-all" class="danger-btn">Reset Everything</button>
-                </div>
-            </div>
-        `;
+        const modal = this.createModal(
+            getTranslation('modal_reset_all_title'),
+            `<p>${getTranslation('modal_reset_all_message')}</p>`,
+            [
+                {
+                    text: getTranslation('modal_cancel'),
+                    class: 'secondary-btn'
+                },
+                {
+                    text: getTranslation('modal_reset_all_confirm'),
+                    class: 'danger-btn',
+                    action: () => {
+                        // Clear all data from localStorage
+                        localStorage.clear();
+                        
+                        // Show notification
+                        this.showNotification(getTranslation('all_reset_success'), 3000, 'warning');
+                        
+                        // Reload the page
+                        window.location.reload();
+                    }
+                }
+            ]
+        );
         
         // Add to body
         document.body.appendChild(modal);
-        
-        // Add event listeners
-        document.getElementById('cancel-reset-all').addEventListener('click', () => {
-            modal.remove();
-        });
-        
-        document.getElementById('confirm-reset-all').addEventListener('click', () => {
-            // Clear all data from localStorage
-            localStorage.clear();
-            
-            // Show notification
-            this.showNotification('All settings and progress have been reset');
-            
-            // Remove modal
-            modal.remove();
-            
-            // Reload the page
-            window.location.reload();
-        });
     }
     
     /**

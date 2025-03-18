@@ -960,12 +960,189 @@ class LessonManager {
      * Start learning from the beginning
      */
     startLearning() {
-        // Go to lessons screen
+        // Create and show welcome modal
+        const modal = document.createElement('div');
+        modal.className = 'modal welcome-modal';
+        modal.innerHTML = `
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>${getTranslation('welcome_to_piano')}</h2>
+                    <button class="close-button">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <h3>${getTranslation('welcome_subtitle')}</h3>
+                    <p>${getTranslation('welcome_message')}</p>
+                    <div class="welcome-options">
+                        <div class="option-card" data-option="tutorial">
+                            <h3>${getTranslation('tutorial_title')}</h3>
+                            <p>${getTranslation('tutorial_step1_content')}</p>
+                        </div>
+                        <div class="option-card" data-option="assessment">
+                            <h3>${getTranslation('skill_assessment')}</h3>
+                            <p>${getTranslation('skill_assessment_message')}</p>
+                        </div>
+                        <div class="option-card" data-option="beginner">
+                            <h3>${getTranslation('skill_beginner')}</h3>
+                            <p>${getTranslation('skill_beginner_desc')}</p>
+                        </div>
+                    </div>
+                    <div class="welcome-buttons">
+                        <button class="primary-btn" id="get-started-btn">${getTranslation('get_started')}</button>
+                        <button class="secondary-btn" id="continue-playing-btn">${getTranslation('continue_playing')}</button>
+                    </div>
+                </div>
+            </div>
+        `;
+
+        // Add event listeners
+        const closeButton = modal.querySelector('.close-button');
+        closeButton.addEventListener('click', () => {
+            modal.remove();
+        });
+
+        // Add click handlers for options
+        modal.querySelectorAll('.option-card').forEach(card => {
+            card.addEventListener('click', () => {
+                modal.remove();
+                
+                switch (card.dataset.option) {
+                    case 'tutorial':
+                        if (typeof Tutorial !== 'undefined' && Tutorial.startTutorial) {
+                            Tutorial.startTutorial();
+                        }
+                        break;
+                    case 'assessment':
+                        this.startSkillAssessment();
+                        break;
+                    case 'beginner':
+                        this.startBeginnerJourney();
+                        break;
+                }
+            });
+        });
+        
+        // Add event listeners for buttons
+        const getStartedBtn = modal.querySelector('#get-started-btn');
+        getStartedBtn.addEventListener('click', () => {
+            modal.remove();
+            this.startBeginnerJourney();
+        });
+        
+        const continuePlayingBtn = modal.querySelector('#continue-playing-btn');
+        continuePlayingBtn.addEventListener('click', () => {
+            modal.remove();
+            this.continueProgress();
+        });
+
+        // Add the modal to the body
+        document.body.appendChild(modal);
+    }
+
+    /**
+     * Start skill assessment
+     */
+    startSkillAssessment() {
+        // Go to lessons screen first
         document.querySelectorAll('.screen').forEach(screen => {
             screen.classList.remove('active');
         });
         document.getElementById('lessons-screen').classList.add('active');
+
+        // Create and show assessment modal
+        const modal = document.createElement('div');
+        modal.className = 'modal assessment-modal';
+        modal.innerHTML = `
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>${getTranslation('skill_assessment')}</h2>
+                    <button class="close-button">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <h3>${getTranslation('skill_assessment_subtitle')}</h3>
+                    <p>${getTranslation('skill_assessment_message')}</p>
+                    <div class="assessment-options">
+                        <div class="option-card" data-level="beginner">
+                            <h3>${getTranslation('skill_beginner')}</h3>
+                            <p>${getTranslation('skill_beginner_desc')}</p>
+                        </div>
+                        <div class="option-card" data-level="intermediate">
+                            <h3>${getTranslation('skill_intermediate')}</h3>
+                            <p>${getTranslation('skill_intermediate_desc')}</p>
+                        </div>
+                        <div class="option-card" data-level="advanced">
+                            <h3>${getTranslation('skill_advanced')}</h3>
+                            <p>${getTranslation('skill_advanced_desc')}</p>
+                        </div>
+                    </div>
+                    <div class="assessment-buttons">
+                        <button class="secondary-btn" id="skip-assessment-btn">${getTranslation('skip_assessment')}</button>
+                        <button class="primary-btn" id="start-assessment-btn">${getTranslation('start_assessment')}</button>
+                    </div>
+                </div>
+            </div>
+        `;
+
+        // Add event listeners
+        const closeButton = modal.querySelector('.close-button');
+        closeButton.addEventListener('click', () => {
+            modal.remove();
+            this.startBeginnerJourney();
+        });
         
+        // Add click handlers for skill level options
+        modal.querySelectorAll('.option-card').forEach(card => {
+            card.addEventListener('click', () => {
+                // Clear any previously selected cards
+                modal.querySelectorAll('.option-card').forEach(c => c.classList.remove('selected'));
+                // Select this card
+                card.classList.add('selected');
+            });
+        });
+        
+        // Add event listener for skip assessment button
+        const skipAssessmentBtn = modal.querySelector('#skip-assessment-btn');
+        skipAssessmentBtn.addEventListener('click', () => {
+            modal.remove();
+            this.startBeginnerJourney();
+        });
+        
+        // Add event listener for start assessment button
+        const startAssessmentBtn = modal.querySelector('#start-assessment-btn');
+        startAssessmentBtn.addEventListener('click', () => {
+            // Find the selected skill level
+            const selectedCard = modal.querySelector('.option-card.selected');
+            let level = 'beginner';
+            
+            if (selectedCard) {
+                level = selectedCard.dataset.level;
+            }
+            
+            modal.remove();
+            
+            // Start appropriate journey based on skill level
+            switch (level) {
+                case 'beginner':
+                    this.startBeginnerJourney();
+                    break;
+                case 'intermediate':
+                    this.startIntermediateJourney();
+                    break;
+                case 'advanced':
+                    this.startAdvancedJourney();
+                    break;
+                default:
+                    this.startBeginnerJourney();
+            }
+        });
+
+        // Add the modal to the body
+        document.body.appendChild(modal);
+    }
+
+    /**
+     * Start beginner journey
+     */
+    startBeginnerJourney() {
         // Set level to beginner
         this.currentLevel = 'beginner';
         
@@ -985,7 +1162,47 @@ class LessonManager {
             this.openLesson(LESSONS.beginner[0].id);
         }
     }
-    
+
+    /**
+     * Start intermediate journey
+     */
+    startIntermediateJourney() {
+        this.currentLevel = 'intermediate';
+        
+        document.querySelectorAll('.level-btn').forEach(button => {
+            button.classList.remove('active');
+            if (button.dataset.level === 'intermediate') {
+                button.classList.add('active');
+            }
+        });
+        
+        this.renderLessons();
+        
+        if (LESSONS.intermediate && LESSONS.intermediate.length > 0) {
+            this.openLesson(LESSONS.intermediate[0].id);
+        }
+    }
+
+    /**
+     * Start advanced journey
+     */
+    startAdvancedJourney() {
+        this.currentLevel = 'advanced';
+        
+        document.querySelectorAll('.level-btn').forEach(button => {
+            button.classList.remove('active');
+            if (button.dataset.level === 'advanced') {
+                button.classList.add('active');
+            }
+        });
+        
+        this.renderLessons();
+        
+        if (LESSONS.advanced && LESSONS.advanced.length > 0) {
+            this.openLesson(LESSONS.advanced[0].id);
+        }
+    }
+
     /**
      * Continue from last played lesson
      */

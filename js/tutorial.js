@@ -11,32 +11,32 @@ class Tutorial {
         this.tutorialSteps = [
             {
                 element: '.nav-btn',
-                title: 'Navigation',
-                content: 'Use these buttons to navigate between different sections of the app.',
+                titleKey: 'tutorial_step1_title',
+                contentKey: 'tutorial_step1_content',
                 position: 'bottom'
             },
             {
                 element: '#start-learning-btn',
-                title: 'Start Learning',
-                content: 'Begin your piano journey by clicking here to access the lessons.',
+                titleKey: 'tutorial_step2_title',
+                contentKey: 'tutorial_step2_content',
                 position: 'top'
             },
             {
                 element: '#piano-keyboard',
-                title: 'Interactive Piano',
-                content: 'Practice on this virtual piano. You can use your computer keyboard or connect a MIDI keyboard.',
+                titleKey: 'tutorial_step3_title',
+                contentKey: 'tutorial_step3_content',
                 position: 'top'
             },
             {
                 element: '#settings-btn',
-                title: 'Settings',
-                content: 'Customize your learning experience, adjust sound settings, and manage your progress.',
+                titleKey: 'tutorial_step4_title',
+                contentKey: 'tutorial_step4_content',
                 position: 'bottom'
             },
             {
                 element: '.theme-toggle',
-                title: 'Theme Toggle',
-                content: 'Switch between light and dark themes for comfortable viewing.',
+                titleKey: 'tutorial_step5_title',
+                contentKey: 'tutorial_step5_content',
                 position: 'left'
             }
         ];
@@ -51,11 +51,20 @@ class Tutorial {
         // Add event listeners
         this.nextButton.addEventListener('click', () => this.nextStep());
         this.skipButton.addEventListener('click', () => this.endTutorial());
+        
+        // Update button text with translations
+        this.updateButtonText();
 
         // Check if this is the first visit
         if (!localStorage.getItem('tutorialCompleted')) {
             this.startTutorial();
         }
+    }
+    
+    updateButtonText() {
+        // Update button text with translations
+        this.nextButton.textContent = getTranslation('tutorial_next');
+        this.skipButton.textContent = getTranslation('tutorial_skip');
     }
 
     createProgressDots() {
@@ -134,15 +143,15 @@ class Tutorial {
         if (!element) return;
 
         this.highlightElement(element);
-        this.tooltip.querySelector('h3').textContent = step.title;
-        this.tooltip.querySelector('p').textContent = step.content;
+        this.tooltip.querySelector('h3').textContent = getTranslation(step.titleKey);
+        this.tooltip.querySelector('p').textContent = getTranslation(step.contentKey);
         this.positionTooltip(element, step.position);
         
         // Update button text for last step
         if (this.currentStep === this.tutorialSteps.length - 1) {
-            this.nextButton.textContent = 'Finish';
+            this.nextButton.textContent = getTranslation('tutorial_finish');
         } else {
-            this.nextButton.textContent = 'Next';
+            this.nextButton.textContent = getTranslation('tutorial_next');
         }
 
         this.updateProgressDots();
@@ -151,6 +160,11 @@ class Tutorial {
     startTutorial() {
         this.currentStep = 0;
         this.overlay.classList.add('active');
+        // Make sure title is correct
+        const tutorialTitle = document.querySelector('.tutorial-modal-title');
+        if (tutorialTitle) {
+            tutorialTitle.textContent = getTranslation('tutorial_title');
+        }
         this.showStep(this.tutorialSteps[0]);
     }
 

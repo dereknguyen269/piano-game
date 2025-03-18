@@ -14,7 +14,8 @@ const TRANSLATIONS = {
         
         // Home screen
         welcome_title: "Welcome to Piano Learning Game",
-        welcome_subtitle: "Learn to play piano at your own pace with interactive lessons and exercises.",
+        welcome_subtitle: "Interactive Piano Learning Experience",
+        welcome_message: "Learn to play piano at your own pace with interactive lessons, exercises, and practice modes.",
         progress_title: "Your Progress",
         start_learning: "Start Learning",
         continue_learning: "Continue Where You Left Off",
@@ -33,6 +34,7 @@ const TRANSLATIONS = {
         
         // Lesson player
         back_to_lessons: "← Back to Lessons",
+        back_to_practice: "← Back to Practice",
         play_demo: "Play Demo",
         restart: "Restart",
         next_lesson: "Next Lesson",
@@ -83,12 +85,6 @@ const TRANSLATIONS = {
         settings_reset_progress: "Reset Progress",
         settings_reset_all: "Reset All Settings",
         
-        // Lesson player
-        back_to_lessons: "← Back to Lessons",
-        play_demo: "Play Demo",
-        restart: "Restart",
-        next_lesson: "Next Lesson",
-        
         // Challenges
         back_to_challenges: "← Back to Challenges",
         restart_challenge: "Restart Challenge",
@@ -106,9 +102,21 @@ const TRANSLATIONS = {
         settings_saved: "Settings saved successfully",
         progress_reset: "Progress has been reset",
         all_reset: "All settings have been reset",
+        progress_reset_success: "Progress has been reset",
+        all_reset_success: "All settings and progress have been reset",
+        
+        // Modal dialogs
+        modal_cancel: "Cancel",
+        modal_reset_progress_title: "Reset Progress",
+        modal_reset_progress_message: "Are you sure you want to reset all your lesson progress? This cannot be undone.",
+        modal_reset_progress_confirm: "Reset Progress",
+        modal_reset_all_title: "Reset All Settings",
+        modal_reset_all_message: "Are you sure you want to reset all settings and progress? This cannot be undone.",
+        modal_reset_all_confirm: "Reset Everything",
         
         // Compatibility warning
         compatibility_warning: "Browser Compatibility Issue",
+        compatibility_audio_warning: "Web Audio API is not supported in this browser. Please use a modern browser like Chrome, Firefox, or Safari.",
         dismiss: "Dismiss",
         
         // Lesson content translations
@@ -228,7 +236,55 @@ const TRANSLATIONS = {
                     <p>Let's practice these patterns with simple melodies.</p>
                 `
             }
-        }
+        },
+        // Errors
+        error_unexpected: "An unexpected error occurred",
+        
+        // Welcome and assessment modals
+        welcome_to_piano: "Welcome to Piano Learning Game",
+        welcome_subtitle: "Interactive Piano Learning Experience",
+        welcome_message: "Learn to play piano at your own pace with interactive lessons, exercises, and practice modes.",
+        get_started: "Get Started",
+        continue_playing: "Continue Playing",
+        
+        skill_assessment: "Skill Assessment",
+        skill_assessment_subtitle: "Let's find your level",
+        skill_assessment_message: "To provide the best learning experience, we'd like to understand your current piano skills.",
+        skill_beginner: "Beginner",
+        skill_beginner_desc: "I've never played piano before or just starting out",
+        skill_intermediate: "Intermediate", 
+        skill_intermediate_desc: "I can play simple pieces and know basic music theory",
+        skill_advanced: "Advanced",
+        skill_advanced_desc: "I'm comfortable with complex pieces and want to refine my skills",
+        skip_assessment: "Skip Assessment",
+        start_assessment: "Start Assessment",
+        
+        // Tutorial modal
+        tutorial_title: "Piano Tutorial",
+        tutorial_next: "Next",
+        tutorial_previous: "Previous",
+        tutorial_skip: "Skip Tutorial",
+        tutorial_finish: "Finish",
+        
+        // Tutorial steps
+        tutorial_step1_title: "Welcome",
+        tutorial_step1_content: "This tutorial will guide you through the basics of using the Piano Learning Game.",
+        tutorial_step2_title: "Piano Keyboard",
+        tutorial_step2_content: "This is the piano keyboard. You can play it using your mouse, computer keyboard, or a MIDI keyboard.",
+        tutorial_step3_title: "Lessons",
+        tutorial_step3_content: "In the Lessons section, you'll find structured lessons to improve your piano skills.",
+        tutorial_step4_title: "Practice",
+        tutorial_step4_content: "The Practice section lets you freely explore the piano and practice specific skills.",
+        tutorial_step5_title: "Settings",
+        tutorial_step5_content: "The Settings section lets you customize your piano experience and adjust sound settings.",
+        
+        // Free play mode
+        free_play_title: "Free Play Mode",
+        free_play_instructions: "Play freely on the piano keyboard. Use your computer keyboard, touch the keys, or connect a MIDI keyboard.",
+        keyboard_mapping: "Keyboard mapping:",
+        keyboard_mapping_lower: "Lower row (Z-M): C4-B4",
+        keyboard_mapping_upper: "Upper row (Q-U): C5-B5",
+        keyboard_mapping_black: "Black keys: S, D, G, H, J (lower) and 2, 3, 5, 6, 7 (upper)",
     },
     
     // Vietnamese translations
@@ -241,7 +297,8 @@ const TRANSLATIONS = {
         
         // Home screen
         welcome_title: "Chào mừng đến với Trò chơi Học Piano",
-        welcome_subtitle: "Học chơi piano theo tốc độ của riêng bạn với các bài học và bài tập tương tác.",
+        welcome_subtitle: "Trải nghiệm Học Piano Tương tác",
+        welcome_message: "Học chơi piano theo tốc độ của riêng bạn với các bài học, bài tập và chế độ luyện tập tương tác.",
         progress_title: "Tiến độ của bạn",
         start_learning: "Bắt đầu học",
         continue_learning: "Tiếp tục từ nơi bạn đã dừng",
@@ -301,6 +358,7 @@ const TRANSLATIONS = {
         
         // Lesson player
         back_to_lessons: "← Quay lại bài học",
+        back_to_practice: "← Quay lại luyện tập",
         play_demo: "Phát thử",
         restart: "Bắt đầu lại",
         next_lesson: "Bài học tiếp theo",
@@ -322,12 +380,24 @@ const TRANSLATIONS = {
         
         // Notifications
         settings_saved: "Đã lưu cài đặt thành công",
-        progress_reset: "Tiến độ đã được đặt lại",
-        all_reset: "Tất cả cài đặt đã được đặt lại",
+        progress_reset: "Đã đặt lại tiến trình",
+        all_reset: "Đã đặt lại tất cả cài đặt",
+        progress_reset_success: "Đã đặt lại tiến trình",
+        all_reset_success: "Đã đặt lại tất cả cài đặt và tiến trình",
+        
+        // Modal dialogs
+        modal_cancel: "Hủy",
+        modal_reset_progress_title: "Đặt lại tiến trình",
+        modal_reset_progress_message: "Bạn có chắc chắn muốn đặt lại tất cả tiến trình học? Hành động này không thể hoàn tác.",
+        modal_reset_progress_confirm: "Đặt lại tiến trình",
+        modal_reset_all_title: "Đặt lại tất cả cài đặt",
+        modal_reset_all_message: "Bạn có chắc chắn muốn đặt lại tất cả cài đặt và tiến trình? Hành động này không thể hoàn tác.",
+        modal_reset_all_confirm: "Đặt lại tất cả",
         
         // Compatibility warning
         compatibility_warning: "Vấn đề tương thích trình duyệt",
-        dismiss: "Bỏ qua",
+        compatibility_audio_warning: "Web Audio API không được hỗ trợ trong trình duyệt này. Vui lòng sử dụng trình duyệt hiện đại như Chrome, Firefox, hoặc Safari.",
+        dismiss: "Đóng",
         
         // Lesson content translations
         lesson_content: {
@@ -446,7 +516,55 @@ const TRANSLATIONS = {
                     <p>Hãy thực hành các mẫu này với các giai điệu đơn giản.</p>
                 `
             }
-        }
+        },
+        // Errors
+        error_unexpected: "Đã xảy ra lỗi không mong muốn",
+        
+        // Welcome and assessment modals
+        welcome_to_piano: "Chào mừng đến với Trò chơi Học Piano",
+        welcome_subtitle: "Trải nghiệm Học Piano Tương tác",
+        welcome_message: "Học chơi piano theo tốc độ của riêng bạn với các bài học, bài tập và chế độ luyện tập tương tác.",
+        get_started: "Bắt đầu",
+        continue_playing: "Tiếp tục chơi",
+        
+        skill_assessment: "Đánh giá Kỹ năng",
+        skill_assessment_subtitle: "Hãy tìm cấp độ của bạn",
+        skill_assessment_message: "Để cung cấp trải nghiệm học tập tốt nhất, chúng tôi muốn hiểu kỹ năng piano hiện tại của bạn.",
+        skill_beginner: "Người mới",
+        skill_beginner_desc: "Tôi chưa từng chơi piano hoặc chỉ mới bắt đầu",
+        skill_intermediate: "Trung cấp",
+        skill_intermediate_desc: "Tôi có thể chơi các bài đơn giản và biết lý thuyết âm nhạc cơ bản",
+        skill_advanced: "Nâng cao",
+        skill_advanced_desc: "Tôi đã quen với các bài phức tạp và muốn nâng cao kỹ năng",
+        skip_assessment: "Bỏ qua Đánh giá",
+        start_assessment: "Bắt đầu Đánh giá",
+        
+        // Tutorial modal
+        tutorial_title: "Hướng dẫn Piano",
+        tutorial_next: "Tiếp theo",
+        tutorial_previous: "Trước đó",
+        tutorial_skip: "Bỏ qua Hướng dẫn",
+        tutorial_finish: "Hoàn thành",
+        
+        // Tutorial steps
+        tutorial_step1_title: "Chào mừng",
+        tutorial_step1_content: "Hướng dẫn này sẽ giúp bạn tìm hiểu cơ bản về cách sử dụng Trò chơi Học Piano.",
+        tutorial_step2_title: "Bàn phím Piano",
+        tutorial_step2_content: "Đây là bàn phím piano. Bạn có thể chơi bằng chuột, bàn phím máy tính hoặc bàn phím MIDI.",
+        tutorial_step3_title: "Bài học",
+        tutorial_step3_content: "Trong phần Bài học, bạn sẽ tìm thấy các bài học có cấu trúc để nâng cao kỹ năng piano của mình.",
+        tutorial_step4_title: "Luyện tập",
+        tutorial_step4_content: "Phần Luyện tập cho phép bạn tự do khám phá đàn piano và luyện tập các kỹ năng cụ thể.",
+        tutorial_step5_title: "Cài đặt",
+        tutorial_step5_content: "Phần Cài đặt cho phép bạn tùy chỉnh trải nghiệm piano và điều chỉnh cài đặt âm thanh.",
+        
+        // Free play mode
+        free_play_title: "Chế độ Chơi Tự do",
+        free_play_instructions: "Chơi tự do trên bàn phím piano. Sử dụng bàn phím máy tính, chạm vào phím, hoặc kết nối bàn phím MIDI.",
+        keyboard_mapping: "Bố trí bàn phím:",
+        keyboard_mapping_lower: "Hàng dưới (Z-M): C4-B4",
+        keyboard_mapping_upper: "Hàng trên (Q-U): C5-B5",
+        keyboard_mapping_black: "Phím đen: S, D, G, H, J (dưới) và 2, 3, 5, 6, 7 (trên)",
     }
 };
 

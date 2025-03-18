@@ -4,6 +4,31 @@
  */
 console.log('app.js loaded');
 
+/**
+ * Global error handler
+ * @param {string} message - Error message
+ * @param {Error} error - Optional error object
+ * @param {boolean} silent - Whether to log but not show to user
+ */
+function handleError(message, error = null, silent = false) {
+    // Always log to console for debugging
+    if (error) {
+        console.error(message, error);
+    } else {
+        console.error(message);
+    }
+    
+    // Show user notification unless silent
+    if (!silent && window.ui && window.ui.showNotification) {
+        window.ui.showNotification(message, 5000, 'error');
+    }
+}
+
+// Catch unhandled errors
+window.addEventListener('error', (event) => {
+    handleError(getTranslation('error_unexpected') || 'An unexpected error occurred: ' + event.message, event.error);
+});
+
 // Initialize the application when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
     console.log('DOM fully loaded');
@@ -63,43 +88,59 @@ function initializeLanguage() {
  * Check browser compatibility
  */
 function checkBrowserCompatibility() {
-    // Check for Web Audio API support
+    // Check for Web Audio API
     if (!window.AudioContext && !window.webkitAudioContext) {
-        showCompatibilityWarning('Web Audio API is not supported in this browser. Please use a modern browser like Chrome, Firefox, or Safari.');
+        const message = getTranslation('compatibility_audio_warning');
+        showCompatibilityWarning(message);
+        handleError('Web Audio API is not supported in this browser', null, true);
+        return false;
     }
     
     // Check for localStorage support
     if (!window.localStorage) {
         showCompatibilityWarning('Local Storage is not supported in this browser. Progress saving will not work.');
     }
+    
+    return true;
 }
 
 /**
  * Show compatibility warning
  */
 function showCompatibilityWarning(message) {
-    // Get translated strings if available
-    const warningTitle = typeof getTranslation === 'function' ? 
-        getTranslation('compatibility_warning') : 'Browser Compatibility Issue';
-    const dismissText = typeof getTranslation === 'function' ? 
-        getTranslation('dismiss') : 'Dismiss';
-    
-    const warningElement = document.createElement('div');
-    warningElement.className = 'compatibility-warning';
-    warningElement.innerHTML = `
-        <div class="warning-content">
-            <h3>${warningTitle}</h3>
-            <p>${message}</p>
-            <button id="dismiss-warning">${dismissText}</button>
-        </div>
-    `;
-    
-    document.body.appendChild(warningElement);
-    
-    // Add dismiss button functionality
-    document.getElementById('dismiss-warning').addEventListener('click', () => {
-        warningElement.remove();
-    });
+    // Create a modal for the compatibility warning
+    if (window.ui && typeof window.ui.createModal === 'function') {
+        const modal = window.ui.createModal(
+            getTranslation('compatibility_warning'),
+            `<p>${message}</p>`,
+            [
+                {
+                    text: getTranslation('dismiss'),
+                    class: 'secondary-btn'
+                }
+            ]
+        );
+        
+        document.body.appendChild(modal);
+    } else {
+        // Fallback if UI is not initialized yet
+        const warningElement = document.createElement('div');
+        warningElement.className = 'compatibility-warning';
+        warningElement.innerHTML = `
+            <div class="warning-content">
+                <h3>${getTranslation('compatibility_warning')}</h3>
+                <p>${message}</p>
+                <button id="dismiss-warning">${getTranslation('dismiss')}</button>
+            </div>
+        `;
+        
+        document.body.appendChild(warningElement);
+        
+        // Add dismiss button functionality
+        document.getElementById('dismiss-warning').addEventListener('click', () => {
+            warningElement.remove();
+        });
+    }
 }
 
 /**
@@ -134,13 +175,12 @@ function onMIDISuccess(midiAccess) {
 /**
  * Handle MIDI access failure
  */
-function onMIDIFailure() {
-    console.log('Could not access your MIDI devices.');
-    
-    // Disable MIDI radio button
-    const midiRadio = document.getElementById('input-midi');
-    if (midiRadio) {
-        midiRadio.disabled = true;
+function onMIDIFailure(error) {
+    console.log('Failed to access MIDI devices');
+    if (error) {
+        handleError('Failed to access MIDI devices: ' + error.message, error, true);
+    } else {
+        handleError('Failed to access MIDI devices. Your browser may not support WebMIDI.', null, true);
     }
 }
 
